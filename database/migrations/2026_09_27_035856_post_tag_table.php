@@ -20,6 +20,9 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnDelete();
 
+            // This creates a composite primary key using both columns together.
+            // bcoz we dont mention id in this table so combinely both of these act as a id like primary key
+            // uniqueness character like ->unique method
             $table->primary(['post_id', 'tag_id']);
 
             $table->index('tag_id');
