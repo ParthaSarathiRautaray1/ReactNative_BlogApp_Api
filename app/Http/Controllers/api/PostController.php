@@ -17,8 +17,10 @@ class PostController extends Controller
         $posts = Post::with([
             'user',
             'category',
-            // 'comments.user',
-            'comments',
+            // comments -> give only comments related data but
+            // comments.user => give comments related data with the user info bcoz we have the relationship
+            'comments.user',
+            // 'comments',
             'tags',
         ])->get();
 
@@ -108,7 +110,7 @@ class PostController extends Controller
             $post->tags()->sync($tagIds);
         }
 
-        // At this point our post exists, but i want the response to include related data.
+        // At this point our post exists, but i want to include the related data to the response .
         $post->load([
             'user',
             'category',
@@ -131,7 +133,7 @@ class PostController extends Controller
         $post = Post::with([
             'user',
             'category',
-            'comments',
+            'comments.user',
             'tags',
         ])->find($id);
 
@@ -239,4 +241,6 @@ class PostController extends Controller
             'message' => 'Post deleted successfully.',
         ], 200);
     }
+
+    // remaining => likes and bookmarks same like comments so implement it
 }
