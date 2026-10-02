@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\BookmarkController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\FollowController;
 use App\Http\Controllers\Api\LikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
@@ -49,3 +50,10 @@ Route::post('/bookmarks' , [BookmarkController::class , 'store']);
 Route::get('/bookmarks/{id}' , [BookmarkController::class , 'show']);
 Route::put('/bookmarks/{id}' , [TagController::class , 'update']);
 Route::delete('/bookmarks/{id}' , [TagController::class , 'destroy']);
+
+//follows
+Route::get('/follows' , [FollowController::class , 'index']);
+Route::post('/follows' , [FollowController::class , 'store']);
+Route::get('/follows/{id}' , [FollowController::class , 'show']);
+Route::put('/follows/{id}' , [FollowController::class , 'update']);
+Route::delete('/follows/{id}' , [FollowController::class , 'destroy']);
