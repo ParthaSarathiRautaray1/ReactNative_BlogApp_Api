@@ -3,22 +3,24 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Comment;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class CommentController extends Controller
+use function PHPUnit\Framework\isEmpty;
+
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $comments = Comment::with(['user', 'post'])->latest()->get();
+        $tags = Tag::with('posts')->latest()->get();
 
         return response()->json([
             'success' => true,
-            'message' => 'Comments fetched successfully.',
-            'data' => $comments,
+            'message' => 'Tags fetched successfully.',
+            'data' => $tags,
         ], 200);
     }
 
@@ -28,23 +30,16 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'post_id' => 'required|exists:posts,id',
-            'content' => 'required|string',
+            'name' => 'required|string',
         ]);
 
-        $comment = Comment::create([
-            'post_id' => $validated['post_id'],
-            'user_id' => auth()->id(),
-            'content' => $validated['content'],
-        ]);
+        $tag = Tag::create($validated);
 
-        // load its user  , post related data to the response
-        $comment->load(['user', 'post']);
-
+        $tag->load('posts');
         return response()->json([
             'success' => true,
-            'message' => 'Comment created Successfully .',
-            'data' => $comment,
+            'message' => 'Tag created Successfully .',
+            'data' => $tag,
         ], 201);
     }
 
@@ -53,19 +48,18 @@ class CommentController extends Controller
      */
     public function show(string $id)
     {
-        $comment = Comment::with(['user', 'post'])->find($id);
+        $tag = Tag::with('posts')->find($id);
 
-        if (!$comment) {
+        if (!$tag) {
             return response()->json([
                 'success' => false,
-                'message' => 'Comment not found.',
+                'message' => 'Tag not found.',
             ], 404);
         }
-
         return response()->json([
             'success' => true,
-            'message' => 'Comment fetched successfully',
-            'data' => $comment,
+            'message' => 'Tag fetched successfully',
+            'data' => $tag,
         ], 200);
     }
 
@@ -74,28 +68,27 @@ class CommentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $comment = Comment::find($id);
+        $tag = Tag::find($id);
 
-        if (!$comment) {
+        if (!$tag) {
             return response()->json([
                 'success' => false,
-                'message' => 'Comment not Found .',
+                'message' => 'Tag not found.',
             ], 404);
         }
+
         $validated = $request->validate([
-            'content' => 'required|string',
+            'name' => 'sometimes|string'
         ]);
 
-        $comment->update([
-            'content' => $validated['content'],
-        ]);
+        $tag->update($validated);
 
-        $comment->load(['user', 'post']);
+        $tag->load('posts');
 
         return response()->json([
             'success' => true,
-            'message' => 'Comment updated successfully',
-            'data' => $comment,
+            'message' => 'Tag updated successfully',
+            'data' => $tag,
         ], 200);
     }
 
@@ -104,20 +97,22 @@ class CommentController extends Controller
      */
     public function destroy(string $id)
     {
-        $comment = Comment::find($id);
+        $tag = Tag::find($id);
 
-        if (!$comment) {
+        if (!$tag) {
             return response()->json([
                 'success' => false,
-                'message' => 'Comment not Found .',
+                'message' => 'Tag not found.',
             ], 404);
         }
 
-        $comment->delete();
+        $tag->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'Comment deleted successfully',
+            'message' => 'Tag Deleted successfully',
+            'data' => $tag,
         ], 200);
+
     }
 }

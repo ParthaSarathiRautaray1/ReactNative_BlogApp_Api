@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\LikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\TagController;
+use App\Models\Tag;
 
 //post
 Route::get('/posts' , [PostController::class , 'index']);
@@ -32,3 +34,10 @@ Route::get('/likes' , [LikeController::class , 'index']);
 Route::post('/likes' , [LikeController::class , 'store']);
 Route::get('/likes/{id}' , [LikeController::class , 'show']);
 Route::delete('/likes/{id}' , [LikeController::class , 'destroy']);
+
+//Tag
+Route::get('/tags' , [TagController::class , 'index']);
+Route::post('/tags' , [TagController::class , 'store']);
+Route::get('/tags/{id}' , [TagController::class , 'show']);
+Route::put('/tags/{id}' , [TagController::class , 'update']);
+Route::delete('/tags/{id}' , [TagController::class , 'destroy']);

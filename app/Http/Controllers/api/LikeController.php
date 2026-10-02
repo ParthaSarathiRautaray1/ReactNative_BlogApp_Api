@@ -40,7 +40,7 @@ class LikeController extends Controller
         $like->load(['user', 'post']);
 
         return response()->json([
-            'status' => true,
+            'success' => true,
             'message' => 'Like created Successfully .',
             'data' => $like,
         ], 201);
@@ -61,7 +61,7 @@ class LikeController extends Controller
         }
 
         return response()->json([
-            'status' => true,
+            'success' => true,
             'message' => 'Like fetched successfully',
             'data' => $like,
         ], 200);
@@ -87,7 +87,7 @@ class LikeController extends Controller
         $like -> delete();
 
         return response()->json([
-            'status' => true,
+            'success' => true,
             'message' => 'Like deleted successfully',
         ], 200);
     }
