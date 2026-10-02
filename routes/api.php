@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BookmarkController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\LikeController;
@@ -41,3 +42,10 @@ Route::post('/tags' , [TagController::class , 'store']);
 Route::get('/tags/{id}' , [TagController::class , 'show']);
 Route::put('/tags/{id}' , [TagController::class , 'update']);
 Route::delete('/tags/{id}' , [TagController::class , 'destroy']);
+
+//Bookmarks
+Route::get('/bookmarks' , [BookmarkController::class , 'index']);
+Route::post('/bookmarks' , [BookmarkController::class , 'store']);
+Route::get('/bookmarks/{id}' , [BookmarkController::class , 'show']);
+Route::put('/bookmarks/{id}' , [TagController::class , 'update']);
+Route::delete('/bookmarks/{id}' , [TagController::class , 'destroy']);
