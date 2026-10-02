@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\LikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostController;
 
@@ -25,3 +26,9 @@ Route::post('/comments' , [CommentController::class , 'store']);
 Route::get('/comments/{id}' , [CommentController::class , 'show']);
 Route::put('/comments/{id}' , [CommentController::class , 'update']);
 Route::delete('/comments/{id}' , [CommentController::class , 'destroy']);
+
+//Like
+Route::get('/likes' , [LikeController::class , 'index']);
+Route::post('/likes' , [LikeController::class , 'store']);
+Route::get('/likes/{id}' , [LikeController::class , 'show']);
+Route::delete('/likes/{id}' , [LikeController::class , 'destroy']);

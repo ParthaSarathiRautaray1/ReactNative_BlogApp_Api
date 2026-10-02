@@ -55,6 +55,13 @@ class CommentController extends Controller
     {
         $comment = Comment::with(['user', 'post'])->find($id);
 
+        if (!$comment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Comment not found.',
+            ], 404);
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Comment fetched successfully',
@@ -106,7 +113,7 @@ class CommentController extends Controller
             ], 404);
         }
 
-        $comment -> delete();
+        $comment->delete();
 
         return response()->json([
             'status' => true,
